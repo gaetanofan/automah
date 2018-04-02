@@ -44,37 +44,39 @@ public class SliderGui extends JPanel
                         implements ActionListener,
                                    WindowListener,
                                    ChangeListener {
-    //Set up animation parameters.
-    static final int MIN_VAL = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	static final int MIN_VAL = 0;
     static final int MAX_VAL = 180;
-    static final int FPS_INIT = (MAX_VAL - MIN_VAL)/2 ;    //initial frames per second
+    static final int INITAl_VAL = (MAX_VAL - MIN_VAL)/2 ;   
+    
     int frameNumber = 0;
     int NUM_FRAMES = 14;
     ImageIcon[] images = new ImageIcon[NUM_FRAMES];
     int delay;
     boolean frozen = false;
 
-    //This label uses ImageIcon to show the doggy pictures.
     JLabel picture;
 
     public SliderGui() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        delay = 1000 / FPS_INIT;
+        delay = 1000 / INITAl_VAL;
 
         //Create the label.
         JLabel sliderLabel = new JLabel("Ruota la fotocamera", JLabel.CENTER);
         sliderLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //Create the slider.
-        JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL,
-                                              MIN_VAL, MAX_VAL, FPS_INIT);
+        JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL,MIN_VAL, MAX_VAL, INITAl_VAL);
         
 
         framesPerSecond.addChangeListener(this);
 
         //Turn on labels at major tick marks.
-
         framesPerSecond.setMajorTickSpacing(30);
         framesPerSecond.setMinorTickSpacing(5);
         framesPerSecond.setPaintTicks(true);
@@ -91,8 +93,8 @@ public class SliderGui extends JPanel
         picture.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLoweredBevelBorder(),
                 BorderFactory.createEmptyBorder(10,10,10,10)));
-        updatePicture(0); //display first frame
-
+        updatePicture(0); 
+        
         //Put everything together.
         add(sliderLabel);
         add(framesPerSecond);
@@ -162,16 +164,11 @@ public class SliderGui extends JPanel
 
     /** Update the label to display the image for the current frame. */
     protected void updatePicture(int frameNum) {
-        //Get the image if we haven't already.
-        if (images[frameNumber] == null) {
-            //images[frameNumber] = createImageIcon("images/doggy/T" + frameNumber + ".gif");
-        }
-
+        
         //Set the image.
         if (images[frameNumber] != null) {
             picture.setIcon(images[frameNumber]);
-        } else { //image not found
-            // picture.setText("image #" + frameNumber + " not found");
+        } else { 
             picture.setText("" + frameNum);
         }
     }
@@ -197,7 +194,6 @@ public class SliderGui extends JPanel
 
     	// get 2/3 of the height, and 2/3 of the width
     	int height = screenSize.height * 2 / 3;
-    	//int height = 500;
     	int width = HtmlComponent.CAMERA_WIDTH + 10;
 
     	JFrame frame = new JFrame("Demo VideoSorveglianza");
